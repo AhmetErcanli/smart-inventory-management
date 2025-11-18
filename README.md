@@ -4,8 +4,6 @@ A comprehensive, production-ready **Smart Inventory Management System** built wi
 
 ## 🏗️ Architecture
 
-This solution follows **Clean Architecture** principles with clear separation of concerns:
-
 ```
 SmartInventory/
 ├── SmartInventory.Domain/          # Domain Layer (Entities, Interfaces, Enums)
@@ -305,6 +303,4 @@ This is a complete, production-ready solution. Feel free to extend it with addit
 For issues or questions, please refer to the code documentation or create an issue in the repository.
 
 ---
-
-**Built with ❤️ using Clean Architecture and ASP.NET Core 8**
 
