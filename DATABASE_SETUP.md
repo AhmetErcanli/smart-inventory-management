@@ -1,67 +1,79 @@
-# Veritabanı Kurulum Rehberi
+# Database Setup Guide
 
-## SQL Server Instance'ınızı Bulma
+## Finding Your SQL Server Instance
 
-SSMS'i açın ve bağlanırken göreceğiniz server adını not edin.
+Open SSMS and note the server name you see when connecting.
 
-### Seçenek 1: SQL Server Express (En Yaygın)
-Eğer SSMS'te server adı şöyle görünüyorsa:
-- `localhost\SQLEXPRESS`
-- `.\SQLEXPRESS`
-- `YOUR_COMPUTER_NAME\SQLEXPRESS`
+### Option 1: SQL Server Express (Most Common)
 
-O zaman `appsettings.json` dosyasında şu ayarı kullanın:
+If the server name in SSMS looks like this:
+
+  - `localhost\SQLEXPRESS`
+  - `.\SQLEXPRESS`
+  - `YOUR_COMPUTER_NAME\SQLEXPRESS`
+
+Then use the following setting in the `appsettings.json` file:
+
 ```json
 "DefaultConnection": "Server=localhost\\SQLEXPRESS;Database=SmartInventoryDb;Trusted_Connection=true;MultipleActiveResultSets=true;TrustServerCertificate=true"
 ```
 
-### Seçenek 2: Default SQL Server Instance
-Eğer SSMS'te server adı sadece şöyle görünüyorsa:
-- `localhost`
-- `YOUR_COMPUTER_NAME`
-- `.`
+### Option 2: Default SQL Server Instance
 
-O zaman `appsettings.json` dosyasında şu ayarı kullanın:
+If the server name in SSMS looks just like this:
+
+  - `localhost`
+  - `YOUR_COMPUTER_NAME`
+  - `.`
+
+Then use the following setting in the `appsettings.json` file:
+
 ```json
 "DefaultConnection": "Server=localhost;Database=SmartInventoryDb;Trusted_Connection=true;MultipleActiveResultSets=true;TrustServerCertificate=true"
 ```
 
-### Seçenek 3: Named Instance (Özel İsim)
-Eğer özel bir instance adınız varsa (örn: `localhost\MYINSTANCE`):
+### Option 3: Named Instance (Custom Name)
+
+If you have a custom instance name (e.g., `localhost\MYINSTANCE`):
+
 ```json
 "DefaultConnection": "Server=localhost\\MYINSTANCE;Database=SmartInventoryDb;Trusted_Connection=true;MultipleActiveResultSets=true;TrustServerCertificate=true"
 ```
 
-## SQL Server Servisinin Çalıştığını Kontrol Etme
+## Checking if SQL Server Service is Running
 
-1. **Windows Servisleri ile:**
-   - Windows + R tuşlarına basın
-   - `services.msc` yazın ve Enter'a basın
-   - "SQL Server (SQLEXPRESS)" veya "SQL Server (MSSQLSERVER)" servisinin "Çalışıyor" durumunda olduğunu kontrol edin
-   - Eğer durdurulmuşsa, sağ tıklayıp "Başlat" deyin
+1.  **Via Windows Services:**
 
-2. **SSMS ile:**
-   - SSMS'i açın
-   - Server adınızı yazıp "Connect" butonuna basın
-   - Bağlanabiliyorsanız servis çalışıyor demektir
+      - Press Windows + R
+      - Type `services.msc` and press Enter
+      - Check that the "SQL Server (SQLEXPRESS)" or "SQL Server (MSSQLSERVER)" service is in the "Running" state
+      - If it is stopped, right-click and select "Start"
 
-## Veritabanı Otomatik Oluşturulacak
+2.  **Via SSMS:**
 
-Uygulamayı çalıştırdığınızda:
-- `SmartInventoryDb` veritabanı otomatik oluşturulur
-- Tüm tablolar otomatik oluşturulur
-- Hiçbir şey manuel yapmanıza gerek yok!
+      - Open SSMS
+      - Enter your server name and click the "Connect" button
+      - If you can connect, the service is running
 
-## Test Etme
+## Database Will Be Created Automatically
 
-Uygulamayı çalıştırın:
+When you run the application:
+
+  - The `SmartInventoryDb` database is created automatically
+  - All tables are created automatically
+  - You don't need to do anything manually\!
+
+## Testing
+
+Run the application:
+
 ```powershell
 cd src/SmartInventory.WebApi
 dotnet run
 ```
 
-Eğer hata alırsanız, hata mesajını kontrol edin. Genellikle:
-- "Cannot open database" → Server adı yanlış
-- "Login failed" → Authentication sorunu
-- "Server not found" → SQL Server çalışmıyor
+If you receive an error, check the error message. Usually:
 
+  - "Cannot open database" → Server name is incorrect
+  - "Login failed" → Authentication issue
+  - "Server not found" → SQL Server is not running
